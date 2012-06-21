@@ -26,69 +26,112 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 */
 
-class Whoami {
+class Whoami_Widget extends WP_Widget {
 
-    protected $arr = array(
-        'facebook'   => 'Facebook Profile',
-        'twitter'    => 'Twitter Profile',
-        'googleplus' => 'Google+ Profile',
-        'wordpress'  => 'WordPress Profile',
-        'linkedin'   => 'LinkedIn Profile',
-        'rss'        => '',
-    );
+    protected $whoami_obj;
 
     public function __construct() {
-    	add_filter( 'user_contactmethods', array( $this, 'add' ), 10, 1 );
+        $args = array(
+            'classname'   => 'Whoami_Widget',
+            'description' => 'Displays a author description widget'
+        );
+        $this->WP_Widget( 'Whoami_Widget', 'Whoami', $args );
+        $this->whoami_obj = Whoami_Frontend::instance();
     }
 
-    function add( $ucmethods ) {
+    public function form( $instance ) {
+        $instance = wp_parse_args(
+            (array) $instance,
+            array( 'title' => '' )
+        );
+        $title = $instance['title'];
+        printf( '<p><label for="%1$s">Title:</label> <input class="widefat" id="%1$s" name="%2$s" type="text" value="%3$s" /></p>', $this->get_field_id('title'), $this->get_field_name('title'), attribute_escape( $title ) );
+        echo '<p><label for="author">Author:</label>';
+        wp_dropdown_users( array( 'name' => 'author' ) );
+        echo '</p>';
+    }
+
+    public function update( $new_instance, $old_instance ) {
+        $instance = $old_instance;
+        $instance['title']  = $new_instance['title'];
+        $instance['author'] = $new_instance['author'];
+        return $instance;
+    }
+
+    public function widget( $args, $instance ) {
+        global $authordata;
+        extract( $args, EXTR_SKIP );
+        $author = isset ( $authordata->ID ) ? $authordata->ID : $instance['author'];
+        echo $before_widget;
+        if ( !empty( $instance['title'] ) )
+            echo $before_title . apply_filters( 'widget_title', $instance['title'] ) . $after_title;
+        echo $this->whoami_obj->get( $author );
+        echo $after_widget;
+    }
+ 
+}
+add_action( 'widgets_init', create_function( '', 'return register_widget( "Whoami_Widget" );' ) );
+
+class Whoami_Admin {
+
+    protected $arr = array(
+        'facebook'   => 'Facebook',
+        'gpluslight' => 'Google+',
+        'twitter'    => 'Twitter',
+        'github'     => 'GitHub',
+        'linkedin'   => 'LinkedIn',
+        'wordpress'  => 'WordPress',
+    );
+
+    public static function instance() {
+        add_filter( 'user_contactmethods', array( new self(), 'add' ), 10, 1 );
+    }
+
+    public function add( $ucmethods ) {
         foreach ( $this->arr as $key => $value ) {
-            if ( '' != $value && !isset( $ucmethods[$key] ) )
+            if ( !isset( $ucmethods[$key] ) )
                 $ucmethods[$key] = $value;
         }
         return $ucmethods;
 	}
 
 }
-if ( is_admin() ) {
-    $whoami = new Whoami();
-}
-else {
-    class Whoami_Widget extends WP_Widget {
+add_action( 'admin_init', 'Whoami_Admin::instance' );
 
-        public function __construct() {
-            $args = array(
-                'classname'   => 'Whoami_Widget',
-                'description' => 'Displays a author description widget'
-            );
-            $this->WP_Widget( 'Whoami_Widget', 'Whoami', $args );
-        }
+class Whoami_Frontend extends Whoami_Admin {
 
-        public function form($instance) {
-            $instance = wp_parse_args(
-                (array) $instance,
-                array( 'title' => '' )
-            );
-            $title = $instance['title'];
-            printf( '<p><label for="%1$s">Title:</label> <input class="widefat" id="%1$s" name="%2$s" type="text" value="%3$s" /></p>', $this->get_field_id('title'), $this->get_field_name('title'), attribute_escape( $title ) );
-        }
- 
-        public function update( $new_instance, $old_instance ) {
-            $instance = $old_instance;
-            $instance['title'] = $new_instance['title'];
-            return $instance;
-        }
+    protected $size = 80;
 
-        public function widget( $args, $instance ) {
-            extract( $args, EXTR_SKIP );
-            echo $before_widget;
-            if ( !empty( $instance['title'] ) )
-                echo $before_title . apply_filters( 'widget_title', $instance['title'] ) . $after_title;
-            echo "<h1>This is my new widget!</h1>";
-     
-            echo $after_widget;
-        }
-     
+    public static function instance() {
+        $obj = new self();
+        add_action( 'wp_enqueue_scripts', array( $obj, 'add' ) );
+        return $obj;
     }
-    add_action( 'widgets_init', create_function( '', 'return register_widget("Whoami_Widget");' ) );
+
+    public function add() {
+        wp_register_style( 'whoami-style', plugins_url( 'style.css', __FILE__ ) );
+        wp_enqueue_style( 'whoami-style' );
+    }
+
+    public function get( $user_id ) {
+        $temp = '';
+        foreach ( array_keys( $this->arr) as $key ) {
+            $value = get_user_meta( $user_id, $key, true );
+            if ( !empty( $value ) )
+                $temp .= sprintf(
+                    '<li class="sprite-%s"><a href="%s"></a></li>',
+                    $key,
+                    $value
+                );
+        }
+        if ( $temp )
+            $temp = '<ul id="whoami-social-icons">' . $temp . '</ul>';
+        return sprintf(
+            '<p>%s%s</p>%s',
+            get_avatar( $user_id, $this->size ),
+            get_user_meta( $user_id, 'description', true ),
+            $temp
+        );
+    }
+
 }

@@ -41,12 +41,12 @@ class Whoami {
     	add_filter( 'user_contactmethods', array( $this, 'add' ), 10, 1 );
     }
 
-    function add( $methods ) {
+    function add( $ucmethods ) {
         foreach ( $this->arr as $key => $value ) {
-            if ( '' != $value && !isset( $methods[$key] ) )
-                $methods[$key] = $value;
+            if ( '' != $value && !isset( $ucmethods[$key] ) )
+                $ucmethods[$key] = $value;
         }
-        return $methods;
+        return $ucmethods;
 	}
 
 }
@@ -54,5 +54,41 @@ if ( is_admin() ) {
     $whoami = new Whoami();
 }
 else {
+    class Whoami_Widget extends WP_Widget {
 
+        public function __construct() {
+            $args = array(
+                'classname'   => 'Whoami_Widget',
+                'description' => 'Displays a author description widget'
+            );
+            $this->WP_Widget( 'Whoami_Widget', 'Whoami', $args );
+        }
+
+        public function form($instance) {
+            $instance = wp_parse_args(
+                (array) $instance,
+                array( 'title' => '' )
+            );
+            $title = $instance['title'];
+            printf( '<p><label for="%1$s">Title:</label> <input class="widefat" id="%1$s" name="%2$s" type="text" value="%3$s" /></p>', $this->get_field_id('title'), $this->get_field_name('title'), attribute_escape( $title ) );
+        }
+ 
+        public function update( $new_instance, $old_instance ) {
+            $instance = $old_instance;
+            $instance['title'] = $new_instance['title'];
+            return $instance;
+        }
+
+        public function widget( $args, $instance ) {
+            extract( $args, EXTR_SKIP );
+            echo $before_widget;
+            if ( !empty( $instance['title'] ) )
+                echo $before_title . apply_filters( 'widget_title', $instance['title'] ) . $after_title;
+            echo "<h1>This is my new widget!</h1>";
+     
+            echo $after_widget;
+        }
+     
+    }
+    add_action( 'widgets_init', create_function( '', 'return register_widget("Whoami_Widget");' ) );
 }

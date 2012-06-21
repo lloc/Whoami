@@ -75,12 +75,13 @@ add_action( 'widgets_init', create_function( '', 'return register_widget( "Whoam
 class Whoami_Admin {
 
     protected $arr = array(
-        'facebook'   => 'Facebook',
-        'gpluslight' => 'Google+',
-        'twitter'    => 'Twitter',
-        'github'     => 'GitHub',
-        'linkedin'   => 'LinkedIn',
-        'wordpress'  => 'WordPress',
+        'facebook'      => 'Facebook',
+        'googleplus'    => 'Google+',
+        'twitter'       => 'Twitter',
+        'github'        => 'GitHub',
+        'linkedin'      => 'LinkedIn',
+        'wordpress'     => 'WordPress',
+        'stackoverflow' => 'Stackoverflow',
     );
 
     public static function instance() {
@@ -119,13 +120,13 @@ class Whoami_Frontend extends Whoami_Admin {
             $value = get_user_meta( $user_id, $key, true );
             if ( !empty( $value ) )
                 $temp .= sprintf(
-                    '<li class="sprite-%s"><a href="%s"></a></li>',
+                    '<li><a class="%s" href="%s" rel="nofollow"></a></li>',
                     $key,
                     $value
                 );
         }
         if ( $temp )
-            $temp = '<ul id="whoami-social-icons">' . $temp . '</ul>';
+            $temp = '<ul class="socialicons bw">' . $temp . '</ul>';
         return sprintf(
             '<p>%s%s</p>%s',
             get_avatar( $user_id, $this->size ),

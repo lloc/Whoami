@@ -1,2 +1,3 @@
 @import url('supermassivecsspriteicons');
-.avatar{ background:#fff; box-shadow:0 0 2px rgba(0, 0, 0, 0.15); float:left; margin-right:8px; padding:3px; }
+.avatar{background:#fff; box-shadow:0 0 2px rgba(0, 0, 0, 0.15); float:left; margin-right:8px; padding:3px;}
+ul.socialicons li{border:none !important;}

@@ -1,7 +1,7 @@
-.avatar{background:#fff; box-shadow:0 0 2px rgba(0, 0, 0, 0.15); float:left; margin-right:8px; padding:3px;}
-ul.socialicons{list-style-type:none;}
-ul.socialicons li{border:none !important;list-style-type:none;display:inline;float:left;padding:0 5px 0 0;}
-ul.socialicons li a{background:url('sprite.png') no-repeat;text-indent:-9999px;width:32px;height:32px;display:block;overflow:hidden;margin:2px;}
+.avatar{background:#fff; box-shadow:0 0 2px rgba(0, 0, 0, 0.15); float:left; margin-right:8px; padding:3px}
+ul.socialicons{list-style-type:none}
+ul.socialicons li{border:none !important;list-style-type:none;display:inline;float:left;padding:0 5px 0 0}
+ul.socialicons li a{background:url('../img/sprite.png') no-repeat;text-indent:-9999px;width:32px;height:32px;display:block;overflow:hidden;margin:2px}
 ul.socialicons li a.email{background-position: -129px -129px}
 ul.socialicons li a.facebook{background-position: -86px -129px}
 ul.socialicons li a.flickr{background-position: -43px -129px}

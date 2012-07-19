@@ -117,8 +117,10 @@ class Whoami_Frontend extends Whoami_Admin {
     }
 
     public function add() {
-        wp_register_style( 'whoami-style', plugins_url( 'style.css', __FILE__ ) );
+        wp_register_style( 'whoami-style', plugins_url( '/css/style.css', __FILE__ ) );
         wp_enqueue_style( 'whoami-style' );
+        wp_enqueue_script( 'desaturate-js', plugins_url( '/js/jquery.desaturate.js', __FILE__ ), array( 'jquery' ), '0.7', true );
+        wp_enqueue_script( 'whoami-js', plugins_url( '/js/script.js', __FILE__ ), array( 'desaturate' ), '0.1', true );
     }
 
     public function get( $user_id ) {

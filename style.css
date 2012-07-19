@@ -1,3 +1,20 @@
-@import url('supermassivecsspriteicons');
 .avatar{background:#fff; box-shadow:0 0 2px rgba(0, 0, 0, 0.15); float:left; margin-right:8px; padding:3px;}
-ul.socialicons li{border:none !important;}
+ul.socialicons{list-style-type:none;}
+ul.socialicons li{border:none !important;list-style-type:none;display:inline;float:left;padding:0 5px 0 0;}
+ul.socialicons li a{background:url('supermassivecsspriteicons.png') no-repeat;text-indent:-9999px;width:32px;height:32px;display:block;overflow:hidden;margin:2px;}
+ul.socialicons li a.email{background-position: -129px -129px}
+ul.socialicons li a.facebook{background-position: -86px -129px}
+ul.socialicons li a.flickr{background-position: -43px -129px}
+ul.socialicons li a.foursquare{background-position: -0px -129px}
+ul.socialicons li a.github{background-position: -129px -86px}
+ul.socialicons li a.googleplus{background-position: -129px -43px}
+ul.socialicons li a.linkedin{background-position: -129px -0px}
+ul.socialicons li a.pinterest{background-position: -86px -86px}
+ul.socialicons li a.rss{background-position: -43px -86px}
+ul.socialicons li a.skype{background-position: -0px -86px}
+ul.socialicons li a.slideshare{background-position: -86px -43px}
+ul.socialicons li a.stackoverflow{background-position: -43px -43px}
+ul.socialicons li a.twitter{background-position: -0px -43px}
+ul.socialicons li a.vimeo{background-position: -86px -0px}
+ul.socialicons li a.wordpress{background-position: -43px -0px}
+ul.socialicons li a.youtube{background-position: -0px -0px}

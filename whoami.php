@@ -88,11 +88,18 @@ class Whoami_Admin {
         add_filter( 'user_contactmethods', array( new self(), 'add' ), 10, 1 );
     }
 
+    public function bio_input_name() {
+        $blog_id = get_current_blog_id();
+        return sprintf( 'bio_%d', $blog_id );
+    
+    }
+
     public function add( $ucmethods ) {
         foreach ( $this->arr as $key => $value ) {
             if ( !isset( $ucmethods[$key] ) )
                 $ucmethods[$key] = $value;
         }
+        $ucmethods[$this->bio_input_name()] = __( 'Bio' );
         return $ucmethods;
 	}
 
@@ -116,7 +123,7 @@ class Whoami_Frontend extends Whoami_Admin {
 
     public function get( $user_id ) {
         $temp = '';
-        foreach ( array_keys( $this->arr) as $key ) {
+        foreach ( array_keys( $this->arr ) as $key ) {
             $value = get_user_meta( $user_id, $key, true );
             if ( !empty( $value ) )
                 $temp .= sprintf(
@@ -130,7 +137,7 @@ class Whoami_Frontend extends Whoami_Admin {
         return sprintf(
             '<p>%s%s</p>%s',
             get_avatar( $user_id, $this->size ),
-            get_user_meta( $user_id, 'description', true ),
+            get_user_meta( $user_id, $this->bio_input_name(), true ),
             $temp
         );
     }

@@ -133,7 +133,7 @@ class Whoami_Frontend extends Whoami_Admin {
                 );
         }
         if ( $temp )
-            $temp = '<ul class="socialicons bw">' . $temp . '</ul>';
+            $temp = '<ul class="socialicons">' . $temp . '</ul>';
         return sprintf(
             '<p>%s%s</p>%s',
             get_avatar( $user_id, $this->size ),

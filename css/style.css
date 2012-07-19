@@ -1,18 +1,34 @@
-.avatar{background:#fff; box-shadow:0 0 2px rgba(0, 0, 0, 0.15); float:left; margin-right:8px; padding:3px}
-ul.socialicons{list-style-type:none}
-ul.socialicons li{border:none !important;list-style-type:none;display:inline;float:left;padding:0 5px 0 0}
-ul.socialicons li a{background:url('../img/sprite.png') no-repeat;text-indent:-9999px;width:32px;height:32px;display:block;overflow:hidden;margin:2px}
-ul.socialicons li a.facebook.hover{background-position:-43px -129px}
-ul.socialicons li a.facebook{background-position:-0px -129px}
-ul.socialicons li a.github.hover{background-position:-129px -86px}
-ul.socialicons li a.github{background-position:-129px -43px}
-ul.socialicons li a.googleplus.hover{background-position:-129px -0px}
-ul.socialicons li a.googleplus{background-position:-86px -86px}
-ul.socialicons li a.linkedin.hover{background-position:-43px -86px}
-ul.socialicons li a.linkedin{background-position:-0px -86px}
-ul.socialicons li a.stackoverflow.hover{background-position:-86px -43px}
-ul.socialicons li a.stackoverflow{background-position:-43px -43px}
-ul.socialicons li a.twitter.hover{background-position:-0px -43px}
-ul.socialicons li a.twitter{background-position:-86px -0px}
-ul.socialicons li a.wordpress.hover{background-position:-43px -0px}
-ul.socialicons li a.wordpress{background-position:-0px -0px}
+@font-face {
+    font-family: 'JustVector';
+    src: url('justvectorv2-webfont.eot');
+    src: url('justvectorv2-webfont.eot?#iefix') format('eot'),
+         url('justvectorv2-webfont.woff') format('woff'),
+         url('justvectorv2-webfont.ttf') format('truetype'),
+         url('justvectorv2-webfont.svg#webfontkw9J4lGf') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+.avatar {
+    background: #fff;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.15);
+    float: left;
+    margin-right: 8px;
+    padding: 3px;
+}
+ul.socialicons, ul.socialicons li {
+    list-style-type: none;
+}
+ul.socialicons li {
+    border: none !important;display:inline-block;
+}
+ul.socialicons li a {
+    font-family: 'JustVector', Arial, sans-serif;
+    display: inline-block;
+    width: 34px;
+    height: 34px;
+    font-size: 30px;
+    margin-right: 8px;
+}
+ul.socialicons li a:hover { 
+    text-decoration: none;
+}

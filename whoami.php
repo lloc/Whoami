@@ -74,16 +74,6 @@ add_action( 'widgets_init', create_function( '', 'return register_widget( "Whoam
 
 class Whoami_Admin {
 
-    protected $arr = array(
-        'facebook'      => 'Facebook',
-        'googleplus'    => 'Google+',
-        'twitter'       => 'Twitter',
-        'github'        => 'GitHub',
-        'linkedin'      => 'LinkedIn',
-        'wordpress'     => 'WordPress',
-        'stackoverflow' => 'Stackoverflow',
-    );
-
     public static function instance() {
         add_filter( 'user_contactmethods', array( new self(), 'add' ), 10, 1 );
     }
@@ -94,10 +84,22 @@ class Whoami_Admin {
     
     }
 
+    public function services() {
+        return array(
+            'facebook'   => array( 'Facebook', 'F' ),
+            'googleplus' => array( 'Google+', 'g' ),
+            'twitter'    => array( 'Twitter', 't' ),
+            'github'     => array( 'GitHub', 'G' ),
+            'linkedin'   => array( 'LinkedIn', 'l' ),
+            'foursquare' => array( 'Foursquare', 'j' ),
+            'wordpress'  => array( 'WordPress', 'w' ),
+        );
+    }
+
     public function add( $ucmethods ) {
-        foreach ( $this->arr as $key => $value ) {
+        foreach ( $this->services() as $key => $value ) {
             if ( !isset( $ucmethods[$key] ) )
-                $ucmethods[$key] = $value;
+                $ucmethods[$key] = $value[0];
         }
         $ucmethods[$this->bio_input_name()] = __( 'Bio' );
         return $ucmethods;
@@ -123,13 +125,14 @@ class Whoami_Frontend extends Whoami_Admin {
 
     public function get( $user_id ) {
         $temp = '';
-        foreach ( array_keys( $this->arr ) as $key ) {
-            $value = get_user_meta( $user_id, $key, true );
-            if ( !empty( $value ) )
+        foreach ( $this->services() as $key => $value ) {
+            $href = get_user_meta( $user_id, $key, true );
+            if ( !empty( $href ) )
                 $temp .= sprintf(
-                    '<li><a class="%s" href="%s" rel="nofollow"></a></li>',
+                    '<li><a class="%s" href="%s" rel="nofollow">%s</a></li>',
                     $key,
-                    $value
+                    $href,
+                    $value[1]
                 );
         }
         if ( $temp )

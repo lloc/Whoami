@@ -1,4 +1,4 @@
-=== Whoami ===
+=== WP-Whoami ===
 
 Contributors: realloc
 Donate link: http://www.greenpeace.org/international/

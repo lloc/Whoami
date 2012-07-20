@@ -1,7 +1,7 @@
 <?php
 
 /*
-Plugin Name: Whoami
+Plugin Name: WP-Whoami
 Plugin URI: http://lloc.de/wp-whoami
 Description: First prototype of my own author description widget
 Version: 0.1

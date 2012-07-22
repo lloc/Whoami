@@ -33,7 +33,7 @@ class Whoami_Widget extends WP_Widget {
     public function __construct() {
         $args = array(
             'classname'   => 'Whoami_Widget',
-            'description' => 'Displays a author description widget'
+            'description' => __( 'Displays a author description widget', 'whoami' ),
         );
         $this->WP_Widget( 'Whoami_Widget', 'Whoami', $args );
         $this->whoami_obj = Whoami_Frontend::instance();
@@ -45,10 +45,15 @@ class Whoami_Widget extends WP_Widget {
             array( 'title' => '' )
         );
         $title = $instance['title'];
-        printf( '<p><label for="%1$s">Title:</label> <input class="widefat" id="%1$s" name="%2$s" type="text" value="%3$s" /></p>', $this->get_field_id('title'), $this->get_field_name('title'), attribute_escape( $title ) );
-        echo '<p><label for="author">Author:</label>';
-        wp_dropdown_users( array( 'name' => 'author' ) );
-        echo '</p>';
+        printf( 
+            '<p><label for="%1$s">%2$s</label> <input class="widefat" id="%1$s" name="%3$s" type="text" value="%4$s" /></p><p><label for="author">%5$s</label> %6$s</p>', 
+            $this->get_field_id('title'),
+            __( 'Title:', 'whoami' ),
+            $this->get_field_name('title'),
+            attribute_escape( $title ),
+            __( 'Author:', 'whoami' ),
+            wp_dropdown_users( array( 'name' => 'author', 'echo' => false ) )
+        );
     }
 
     public function update( $new_instance, $old_instance ) {
@@ -75,6 +80,7 @@ add_action( 'widgets_init', create_function( '', 'return register_widget( "Whoam
 class Whoami_Admin {
 
     public static function instance() {
+        load_plugin_textdomain( 'whoami', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
         add_filter( 'user_contactmethods', array( new self(), 'add' ), 10, 1 );
     }
 
@@ -101,7 +107,7 @@ class Whoami_Admin {
             if ( !isset( $ucmethods[$key] ) )
                 $ucmethods[$key] = $value[0];
         }
-        $ucmethods[$this->bio_input_name()] = __( 'Bio' );
+        $ucmethods[$this->bio_input_name()] = __( 'Bio', 'whoami' );
         return $ucmethods;
 	}
 

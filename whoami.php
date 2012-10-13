@@ -3,8 +3,8 @@
 /*
 Plugin Name: WP-Whoami
 Plugin URI: http://lloc.de/wp-whoami
-Description: First prototype of my own author description widget
-Version: 0.1
+Description: Just another widget to show a photo, a bio and some social media links with nice webfont-icons
+Version: 0.2
 Author: Dennis Ploetner
 Author URI: http://lloc.de/
 */
@@ -45,11 +45,11 @@ class Whoami_Widget extends WP_Widget {
             array( 'title' => '' )
         );
         $title = $instance['title'];
-        printf( 
+        printf(
             '<p><label for="%1$s">%2$s</label> <input class="widefat" id="%1$s" name="%3$s" type="text" value="%4$s" /></p><p><label for="author">%5$s</label> %6$s</p>', 
-            $this->get_field_id('title'),
+            $this->get_field_id( 'title' ),
             __( 'Title:', 'whoami' ),
-            $this->get_field_name('title'),
+            $this->get_field_name( 'title' ),
             attribute_escape( $title ),
             __( 'Author:', 'whoami' ),
             wp_dropdown_users( array( 'name' => 'author', 'echo' => false ) )
@@ -81,7 +81,8 @@ class Whoami_Admin {
 
     public static function instance() {
         load_plugin_textdomain( 'whoami', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
-        add_filter( 'user_contactmethods', array( new self(), 'add' ), 10, 1 );
+        $obj = new self();
+        add_filter( 'user_contactmethods', array( $obj, 'add' ), 10, 1 );
     }
 
     public function bio_input_name() {
@@ -90,8 +91,8 @@ class Whoami_Admin {
     
     }
 
-    public function services() {
-        return array(
+    public function networks() {
+        $networks = array(
             'facebook'   => array( 'Facebook', 'F' ),
             'googleplus' => array( 'Google+', 'g' ),
             'twitter'    => array( 'Twitter', 't' ),
@@ -100,10 +101,17 @@ class Whoami_Admin {
             'foursquare' => array( 'Foursquare', 'j' ),
             'wordpress'  => array( 'WordPress', 'w' ),
         );
+        if ( has_filter( 'whoami_admin_networks' ) ) {
+            $networks = apply_filters(
+                'whoami_admin_networks',
+                $networks
+            );
+        }
+        return $networks;
     }
 
     public function add( $ucmethods ) {
-        foreach ( $this->services() as $key => $value ) {
+        foreach ( $this->networks() as $key => $value ) {
             if ( !isset( $ucmethods[$key] ) )
                 $ucmethods[$key] = $value[0];
         }
@@ -120,18 +128,29 @@ class Whoami_Frontend extends Whoami_Admin {
 
     public static function instance() {
         $obj = new self();
-        add_action( 'wp_enqueue_scripts', array( $obj, 'add' ) );
+        add_action( 'wp_enqueue_scripts', array( $obj, 'css' ) );
         return $obj;
     }
 
-    public function add() {
-        wp_register_style( 'whoami-style', plugins_url( '/css/style.css', __FILE__ ) );
-        wp_enqueue_style( 'whoami-style' );
+    public function css() {
+        $css = array(
+            'whoami-style' => plugins_url( '/css/style.css', __FILE__ ),
+        );
+        if ( has_filter( 'whoami_frontend_add_css' ) ) {
+            $css = (array) apply_filters(
+                'whoami_frontend_css',
+                $css
+            );
+        }
+        foreach ( $css as $handle => $src ) {
+            wp_register_style( $handle, $src );
+            wp_enqueue_style( $handle );
+        }
     }
 
     public function get( $user_id ) {
         $temp = '';
-        foreach ( $this->services() as $key => $value ) {
+        foreach ( $this->networks() as $key => $value ) {
             $href = get_user_meta( $user_id, $key, true );
             if ( !empty( $href ) )
                 $temp .= sprintf(

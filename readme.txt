@@ -4,8 +4,8 @@ Contributors: realloc
 Donate link: http://www.greenpeace.org/international/
 Tags: widget, author, bio, social media
 Requires at least: 3.1
-Tested up to: 3.4
-Stable tag: 0.1
+Tested up to: 3.4.2
+Stable tag: 0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -25,6 +25,12 @@ The plugin is using the JustVector Social Icons Font created by [Alex Peattie](h
 * set some configuration in your profile and place the widget in your sidebar
 
 == Changelog ==
+
+= 0.2 =
+* de_DE language files added
+* `rel="me"` to the profile links added
+* whoami_admin_networks-filter added
+* whoami_frontend_css-filter added
 
 = 0.1 =
 * first version

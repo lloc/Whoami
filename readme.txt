@@ -27,7 +27,7 @@ The plugin is using the JustVector Social Icons Font created by [Alex Peattie](h
 == Changelog ==
 
 = 0.2 =
-* de_DE language files added
+* de_DE language-files added
 * `rel="me"` to the profile links added
 * whoami_admin_networks-filter added
 * whoami_frontend_css-filter added

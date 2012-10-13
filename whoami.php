@@ -135,9 +135,9 @@ class Whoami_Frontend extends Whoami_Admin {
             $href = get_user_meta( $user_id, $key, true );
             if ( !empty( $href ) )
                 $temp .= sprintf(
-                    '<li><a class="%s" href="%s" rel="nofollow">%s</a></li>',
+                    '<li><a class="%s" href="%s" rel="me">%s</a></li>',
                     $key,
-                    $href,
+                    $href, 
                     $value[1]
                 );
         }

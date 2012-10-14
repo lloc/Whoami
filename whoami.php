@@ -68,8 +68,11 @@ class Whoami_Widget extends WP_Widget {
         extract( $args, EXTR_SKIP );
         $author = isset ( $authordata->ID ) ? $authordata->ID : $instance['author'];
         echo $before_widget;
-        if ( !empty( $instance['title'] ) )
-            echo $before_title . apply_filters( 'widget_title', $instance['title'] ) . $after_title;
+        if ( !empty( $instance['title'] ) ) {
+            echo $before_title;
+            echo apply_filters( 'widget_title', $instance['title'] ); 
+            echo $after_title;
+        }
         echo $this->whoami_obj->get( $author );
         echo $after_widget;
     }
@@ -86,9 +89,7 @@ class Whoami_Admin {
     }
 
     public function bio_input_name() {
-        $blog_id = get_current_blog_id();
-        return sprintf( 'bio_%d', $blog_id );
-    
+        return sprintf( 'bio_%d', get_current_blog_id() );
     }
 
     public function networks() {
@@ -136,7 +137,7 @@ class Whoami_Frontend extends Whoami_Admin {
         $css = array(
             'whoami-style' => plugins_url( '/css/style.css', __FILE__ ),
         );
-        if ( has_filter( 'whoami_frontend_add_css' ) ) {
+        if ( has_filter( 'whoami_frontend_css' ) ) {
             $css = (array) apply_filters(
                 'whoami_frontend_css',
                 $css
@@ -152,22 +153,60 @@ class Whoami_Frontend extends Whoami_Admin {
         $temp = '';
         foreach ( $this->networks() as $key => $value ) {
             $href = get_user_meta( $user_id, $key, true );
-            if ( !empty( $href ) )
-                $temp .= sprintf(
-                    '<li><a class="%s" href="%s" rel="me">%s</a></li>',
-                    $key,
-                    $href, 
-                    $value[1]
-                );
+            if ( !empty( $href ) ) {
+                if ( has_filter( 'whoami_frontend_get_li' ) ) {
+                    $temp .= (string) apply_filters(
+                        'whoami_frontend_get_li',
+                        $key,
+                        $value,
+                        $href
+                    );
+                }
+                else {
+                    $temp .= sprintf(
+                        '<li><a class="%s" href="%s" title="%s" rel="me">%s</a></li>',
+                        $key,
+                        $href,
+                        sprintf(
+                            __( 'My profile at %s', 'whoami' ),
+                            $value[0]
+                        ),
+                        $value[1]
+                    );
+                }
+            }
         }
-        if ( $temp )
-            $temp = '<ul class="socialicons">' . $temp . '</ul>';
-        return sprintf(
-            '<p>%s%s</p>%s',
-            get_avatar( $user_id, $this->size ),
-            get_user_meta( $user_id, $this->bio_input_name(), true ),
-            $temp
-        );
+        if ( $temp ) {
+            if ( has_filter( 'whoami_frontend_get_ul' ) ) {
+                $temp = (string) apply_filters(
+                    'whoami_frontend_get_ul',
+                    $temp
+                );
+            }
+            else {
+                $temp = sprintf(
+                    '<ul class="socialicons">%s</ul>',
+                    $temp
+                );
+            }
+        }
+        if ( has_filter( 'whoami_frontend_get_p' ) ) {
+            $temp = (string) apply_filters(
+                'whoami_frontend_get_p',
+                $temp,
+                $user_id,
+                $this
+            );
+        }
+        else {
+            $temp = sprintf(
+                '<p>%s%s</p>%s',
+                get_avatar( $user_id, $this->size ),
+                get_user_meta( $user_id, $this->bio_input_name(), true ),
+                $temp
+            );
+        }
+        return $temp;
     }
 
 }

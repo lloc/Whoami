@@ -4,7 +4,7 @@
 Plugin Name: WP-Whoami
 Plugin URI: http://lloc.de/
 Description: Just another widget to show a photo, a bio and some social media links with nice webfont-icons
-Version: 0.2
+Version: 0.2.1
 Author: Dennis Ploetner
 Author URI: http://lloc.de/
 */
@@ -44,13 +44,12 @@ class Whoami_Widget extends WP_Widget {
             (array) $instance,
             array( 'title' => '' )
         );
-        $title = $instance['title'];
         printf(
             '<p><label for="%1$s">%2$s</label> <input class="widefat" id="%1$s" name="%3$s" type="text" value="%4$s" /></p><p><label for="author">%5$s</label> %6$s</p>', 
             $this->get_field_id( 'title' ),
             __( 'Title:', 'whoami' ),
             $this->get_field_name( 'title' ),
-            attribute_escape( $title ),
+            attribute_escape( $instance['title'] ),
             __( 'Author:', 'whoami' ),
             wp_dropdown_users( array( 'name' => 'author', 'echo' => false ) )
         );
@@ -68,7 +67,7 @@ class Whoami_Widget extends WP_Widget {
         extract( $args, EXTR_SKIP );
         $author = isset ( $authordata->ID ) ? $authordata->ID : $instance['author'];
         echo $before_widget;
-        if ( !empty( $instance['title'] ) ) {
+        if ( ! empty( $instance['title'] ) ) {
             echo $before_title;
             echo apply_filters( 'widget_title', $instance['title'] ); 
             echo $after_title;
@@ -113,8 +112,9 @@ class Whoami_Admin {
 
     public function add( $ucmethods ) {
         foreach ( $this->networks() as $key => $value ) {
-            if ( !isset( $ucmethods[$key] ) )
+            if ( ! isset( $ucmethods[$key] ) ) {
                 $ucmethods[$key] = $value[0];
+			}
         }
         $ucmethods[$this->bio_input_name()] = __( 'Bio', 'whoami' );
         return $ucmethods;
@@ -153,7 +153,7 @@ class Whoami_Frontend extends Whoami_Admin {
         $temp = '';
         foreach ( $this->networks() as $key => $value ) {
             $href = get_user_meta( $user_id, $key, true );
-            if ( !empty( $href ) ) {
+            if ( ! empty( $href ) ) {
                 if ( has_filter( 'whoami_frontend_get_li' ) ) {
                     $temp .= (string) apply_filters(
                         'whoami_frontend_get_li',
@@ -196,7 +196,7 @@ class Whoami_Frontend extends Whoami_Admin {
                 $temp,
                 $user_id,
                 $this
-            );
+			);
         }
         else {
             $temp = sprintf(
@@ -205,7 +205,7 @@ class Whoami_Frontend extends Whoami_Admin {
                 get_user_meta( $user_id, $this->bio_input_name(), true ),
                 $temp
             );
-        }
+		}
         return $temp;
     }
 

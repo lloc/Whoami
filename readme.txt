@@ -5,7 +5,7 @@ Donate link: http://www.greenpeace.org/international/
 Tags: widget, author, bio, social media
 Requires at least: 3.1
 Tested up to: 3.9
-Stable tag: 0.2.1
+Stable tag: 0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -23,8 +23,12 @@ The plugin is using the JustVector Social Icons Font created by [Alex Peattie](h
 * copy the entire directory in your plugin directory of your wordpress blog (/wp-content/plugins)
 * activate the plugin in your plugin page
 * set some configuration in your profile and place the widget in your sidebar
+* optionally you can place the code `<?php if ( function_exists( 'the_whoami_bio' ) ) the_whoami_bio( $user_id ); ?>` directly in your theme files if you want to print out the bio of a specific user 
 
 == Changelog ==
+
+= 0.3 =
+* new function `the_whoami_bio` for eching the bio of a specific user
 
 = 0.2.1 =
 * some minor improvements

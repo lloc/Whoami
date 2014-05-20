@@ -4,7 +4,7 @@
 Plugin Name: WP-Whoami
 Plugin URI: http://lloc.de/
 Description: Just another widget to show a photo, a bio and some social media links with nice webfont-icons
-Version: 0.2.1
+Version: 0.3
 Author: Dennis Ploetner
 Author URI: http://lloc.de/
 */
@@ -41,7 +41,7 @@ class Whoami_Widget extends WP_Widget {
 
     public function form( $instance ) {
         $instance = wp_parse_args(
-            (array) $instance,
+            ( array ) $instance,
             array( 'title' => '' )
         );
         printf(
@@ -209,4 +209,8 @@ class Whoami_Frontend extends Whoami_Admin {
         return $temp;
     }
 
+}
+
+function the_whoami_bio( $user_id ) {
+	echo get_user_meta( $user_id, Whoami_Frontend::instance()->bio_input_name(), true );
 }

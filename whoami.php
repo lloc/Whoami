@@ -115,7 +115,7 @@ class Whoami_Admin {
             if ( ! isset( $ucmethods[$key] ) ) {
                 $ucmethods[$key] = $value[0];
 			}
-        }
+		}
         $ucmethods[$this->bio_input_name()] = __( 'Bio', 'whoami' );
         return $ucmethods;
 	}
@@ -155,7 +155,7 @@ class Whoami_Frontend extends Whoami_Admin {
             $href = get_user_meta( $user_id, $key, true );
             if ( ! empty( $href ) ) {
                 if ( has_filter( 'whoami_frontend_get_li' ) ) {
-                    $temp .= (string) apply_filters(
+                    $temp .= ( string ) apply_filters(
                         'whoami_frontend_get_li',
                         $key,
                         $value,
@@ -197,7 +197,7 @@ class Whoami_Frontend extends Whoami_Admin {
                 $user_id,
                 $this
 			);
-        }
+		}
         else {
             $temp = sprintf(
                 '<p>%s%s</p>%s',
@@ -211,6 +211,10 @@ class Whoami_Frontend extends Whoami_Admin {
 
 }
 
+/**
+ * Prints the bio - stored in the current blog - of a specific user
+ * @param int $user_id
+ */
 function the_whoami_bio( $user_id ) {
 	echo get_user_meta( $user_id, Whoami_Frontend::instance()->bio_input_name(), true );
 }

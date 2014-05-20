@@ -116,8 +116,8 @@ class Whoami_Admin {
                 $ucmethods[$key] = $value[0];
 			}
 		}
-        $ucmethods[$this->bio_input_name()] = __( 'Bio', 'whoami' );
-        return $ucmethods;
+		$ucmethods[$this->bio_input_name()] = __( 'Bio', 'whoami' );
+		return $ucmethods;
 	}
 
 }

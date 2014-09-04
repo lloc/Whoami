@@ -4,7 +4,7 @@
 Plugin Name: WP-Whoami
 Plugin URI: http://lloc.de/
 Description: Just another widget to show a photo, a bio and some social media links with nice webfont-icons
-Version: 0.3
+Version: 0.4
 Author: Dennis Ploetner
 Author URI: http://lloc.de/
 */

@@ -49,7 +49,7 @@ class Whoami_Widget extends WP_Widget {
             $this->get_field_id( 'title' ),
             __( 'Title:', 'whoami' ),
             $this->get_field_name( 'title' ),
-            attribute_escape( $instance['title'] ),
+            esc_attr( $instance['title'] ),
             __( 'Author:', 'whoami' ),
             wp_dropdown_users( array( 'name' => 'author', 'echo' => false ) )
         );
@@ -57,8 +57,8 @@ class Whoami_Widget extends WP_Widget {
 
     public function update( $new_instance, $old_instance ) {
         $instance = $old_instance;
-        $instance['title']  = $new_instance['title'];
-        $instance['author'] = $new_instance['author'];
+        $instance['title']  = ( isset( $new_instance['title'] )  ? $new_instance['title']  : '' );
+        $instance['author'] = ( isset( $new_instance['author'] ) ? $new_instance['author'] : '' );
         return $instance;
     }
 

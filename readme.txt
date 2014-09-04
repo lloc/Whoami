@@ -28,7 +28,7 @@ The plugin is using the JustVector Social Icons Font created by [Alex Peattie](h
 == Changelog ==
 
 = 0.3 =
-* new function `the_whoami_bio` for eching the bio of a specific user
+* new function `the_whoami_bio` for echoing the bio of a specific user
 * some minor improvements
 
 = 0.2 =

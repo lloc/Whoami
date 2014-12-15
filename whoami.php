@@ -173,10 +173,10 @@ class Whoami_Frontend extends Whoami_Admin {
 				} else {
 					$temp .= sprintf(
 						'<li><a class="%s" href="%s" title="%s" rel="me">%s</a></li>',
-						$value[0],
+						$value[1],
 						$href,
 						sprintf( __( 'My profile at %s', 'whoami' ), $value[0] ),
-						$value[1]
+						$value[0]
 					);
 				}
 			}

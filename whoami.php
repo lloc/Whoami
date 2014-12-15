@@ -143,7 +143,8 @@ class Whoami_Frontend extends Whoami_Admin {
 
 	public function css() {
 		$css = array(
-			'whoami-style' => plugins_url( '/justvector/css/style.css', __FILE__ ),
+			'justvector-style' => plugins_url( '/justvector-webfont/css/style.css', __FILE__ ),
+			'whoami-style'     => plugins_url( '/css/style.css', __FILE__ ),
 		);
 		if ( has_filter( 'whoami_frontend_css' ) ) {
 			$css = (array) apply_filters(

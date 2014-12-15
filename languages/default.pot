@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: WP-Whoami\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-12-15 11:50+0100\n"
-"PO-Revision-Date: 2014-12-15 11:52+0100\n"
+"PO-Revision-Date: 2014-12-15 11:51+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,21 +16,21 @@ msgstr ""
 
 #: ../whoami.php:36
 msgid "Displays a author description widget"
-msgstr "Zeigt ein Widget mit Infos zum Autor an"
+msgstr ""
 
 #: ../whoami.php:50
 msgid "Title:"
-msgstr "Titel:"
+msgstr ""
 
 #: ../whoami.php:53
 msgid "Author:"
-msgstr "Autor:"
+msgstr ""
 
 #: ../whoami.php:121
 msgid "Bio"
-msgstr "Bio"
+msgstr ""
 
 #: ../whoami.php:173
 #, php-format
 msgid "My profile at %s"
-msgstr "Mein Profil bei %s"
+msgstr ""

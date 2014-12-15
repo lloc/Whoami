@@ -4,8 +4,8 @@ Contributors: realloc
 Donate link: http://www.greenpeace.org/international/
 Tags: widget, author, bio, social media
 Requires at least: 3.1
-Tested up to: 4.0
-Stable tag: 0.4
+Tested up to: 4.1
+Stable tag: 1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,7 +15,7 @@ Just another widget to show a photo, a bio and some social media links with nice
 
 Just another widget to show a photo, a bio and some social media links with nice webfont-icons
 
-The plugin is using the JustVector Social Icons Font created by [Alex Peattie](http://www.alexpeattie.com/projects/justvector_font/).
+The plugin is using a web font version of [Alex Peattie](http://www.alexpeattie.com/projects/justvector_font/)'s JustVector icon. Thanks to [Sergio Díaz](http://www.martianwabbit.com/) for his work.
 
 == Installation ==
 
@@ -26,6 +26,10 @@ The plugin is using the JustVector Social Icons Font created by [Alex Peattie](h
 * optionally you can place the code `<?php if ( function_exists( 'the_whoami_bio' ) ) the_whoami_bio( $user_id ); ?>` directly in your theme files if you want to print out the bio of a specific user 
 
 == Changelog ==
+
+= 1.0 =
+* tagged as stable
+* WordPress Coding Standards
 
 = 0.4 =
 * Bugfixes strict mode

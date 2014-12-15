@@ -13,10 +13,12 @@ ul.socialicons li {
 	display:inline-block;
 }
 ul.socialicons li a {
-    font-family: 'JustVector', Arial, sans-serif;
+    font-family: "JustVector", Arial, sans-serif;
     display: inline-block;
     width: 34px;
     height: 34px;
+    max-width: 34px;
+    max-height: 34px;
     font-size: 30px;
     margin-right: 8px;
 }

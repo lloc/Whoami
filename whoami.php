@@ -97,13 +97,13 @@ class Whoami_Admin {
 
 	public function networks() {
 		$networks = array(
-			'facebook'   => array( 'Facebook', 'F' ),
-			'googleplus' => array( 'Google+', 'g' ),
-			'twitter'    => array( 'Twitter', 't' ),
-			'github'     => array( 'GitHub', 'G' ),
-			'linkedin'   => array( 'LinkedIn', 'l' ),
-			'foursquare' => array( 'Foursquare', 'j' ),
-			'wordpress'  => array( 'WordPress', 'w' ),
+			'facebook'   => array( 'Facebook', '.jv-github' ),
+			'googleplus' => array( 'Google+', '.jv-google' ),
+			'twitter'    => array( 'Twitter', '.jv-twitter' ),
+			'github'     => array( 'GitHub', '.jv-github' ),
+			'linkedin'   => array( 'LinkedIn', '.jv-linkedin' ),
+			'foursquare' => array( 'Foursquare', '.jv-foursquare' ),
+			'wordpress'  => array( 'WordPress', '.jv-wordpress' ),
 		);
 		if ( has_filter( 'whoami_admin_networks' ) ) {
 			$networks = apply_filters(
@@ -172,7 +172,7 @@ class Whoami_Frontend extends Whoami_Admin {
 					);
 				} else {
 					$temp .= sprintf(
-						'<li><a class="%s" href="%s" title="%s" rel="me">%s</a></li>',
+						'<li><a class="%s" href="%s" title="%s" rel="me"><i class="%s"></i></a></li>',
 						$key,
 						$href,
 						sprintf(

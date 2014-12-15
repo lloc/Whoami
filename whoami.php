@@ -42,7 +42,10 @@ class Whoami_Widget extends WP_Widget {
 	public function form( $instance ) {
 		$instance = wp_parse_args(
 			( array ) $instance,
-			array( 'title' => '' )
+			array(
+				'title'  => '',
+				'author' => 0,
+			)
 		);
 		printf(
 			'<p><label for="%1$s">%2$s</label> <input class="widefat" id="%1$s" name="%3$s" type="text" value="%4$s" /></p><p><label for="author">%5$s</label> %6$s</p>',
@@ -51,7 +54,7 @@ class Whoami_Widget extends WP_Widget {
 			$this->get_field_name( 'title' ),
 			esc_attr( $instance['title'] ),
 			__( 'Author:', 'whoami' ),
-			wp_dropdown_users( array( 'name' => 'author', 'echo' => false ) )
+			wp_dropdown_users( array( 'name' => 'author', 'echo' => false, 'selected' => $instance['author'] ) )
 		);
 	}
 
@@ -73,7 +76,7 @@ class Whoami_Widget extends WP_Widget {
 			echo $args['after_title'];
 		}
 
-		$author = isset ( $authordata->ID ) ? $authordata->ID : $instance['author'];
+		$author = ! empty( $authordata->ID ) ? $authordata->ID : $instance['author'];
 		echo $this->whoami_obj->get( $author );
 
 		echo $args['after_widget'];
@@ -97,13 +100,13 @@ class Whoami_Admin {
 
 	public function networks() {
 		$networks = array(
-			'facebook'   => array( 'Facebook', '.jv-github' ),
-			'googleplus' => array( 'Google+', '.jv-google' ),
-			'twitter'    => array( 'Twitter', '.jv-twitter' ),
-			'github'     => array( 'GitHub', '.jv-github' ),
-			'linkedin'   => array( 'LinkedIn', '.jv-linkedin' ),
-			'foursquare' => array( 'Foursquare', '.jv-foursquare' ),
-			'wordpress'  => array( 'WordPress', '.jv-wordpress' ),
+			'facebook'   => array( 'Facebook', 'jv-github' ),
+			'googleplus' => array( 'Google+', 'jv-google' ),
+			'twitter'    => array( 'Twitter', 'jv-twitter' ),
+			'github'     => array( 'GitHub', 'jv-github' ),
+			'linkedin'   => array( 'LinkedIn', 'jv-linkedin' ),
+			'foursquare' => array( 'Foursquare', 'jv-foursquare' ),
+			'wordpress'  => array( 'WordPress', 'jv-wordpress' ),
 		);
 		if ( has_filter( 'whoami_admin_networks' ) ) {
 			$networks = apply_filters(
@@ -143,8 +146,7 @@ class Whoami_Frontend extends Whoami_Admin {
 
 	public function css() {
 		$css = array(
-			'justvector-style' => plugins_url( '/justvector-webfont/\stylesheets/justVector.css', __FILE__ ),
-			'whoami-style'     => plugins_url( '/css/style.css', __FILE__ ),
+			'whoami-style' => plugins_url( '/css/style.css', __FILE__ ),
 		);
 		if ( has_filter( 'whoami_frontend_css' ) ) {
 			$css = (array) apply_filters(
@@ -177,6 +179,7 @@ class Whoami_Frontend extends Whoami_Admin {
 						$href,
 						sprintf( __( 'My profile at %s', 'whoami' ), $value[0] ),
 						$value[0]
+
 					);
 				}
 			}

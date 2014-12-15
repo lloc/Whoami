@@ -1,3 +1,21 @@
+@font-face {
+    font-family: "JustVector";
+    src: url("JustVector_befc36341d9795c51945d4d132517a7a.eot");
+    src: url("JustVector_befc36341d9795c51945d4d132517a7a.eot?#iefix") format("embedded-opentype"),
+    url("JustVector_befc36341d9795c51945d4d132517a7a.woff") format("woff"),
+    url("JustVector_befc36341d9795c51945d4d132517a7a.ttf") format("truetype"),
+    url("JustVector_befc36341d9795c51945d4d132517a7a.svg#JustVector") format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    @font-face {
+        font-family: "JustVector";
+        src: url("JustVector_befc36341d9795c51945d4d132517a7a.svg#JustVector") format("svg");
+    }
+}
+[data-icon]:before { content: attr(data-icon); }
+
 .avatar {
     background: #fff;
     box-shadow: 0 0 2px rgba(0, 0, 0, 0.15);

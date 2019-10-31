@@ -3,9 +3,10 @@
 Contributors: realloc
 Donate link: http://www.greenpeace.org/international/
 Tags: widget, author, bio, social media
-Requires at least: 3.1
-Tested up to: 4.1
-Stable tag: 1.0
+Requires at least: 4.6
+Tested up to: 5.2
+Stable tag: 1.1
+Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -26,6 +27,9 @@ The plugin is using a web font version of [Alex Peattie](http://www.alexpeattie.
 * optionally you can place the code `<?php if ( function_exists( 'the_whoami_bio' ) ) the_whoami_bio( $user_id ); ?>` directly in your theme files if you want to print out the bio of a specific user 
 
 == Changelog ==
+
+= 1.1 =
+* WordPress 5.2 compatibility
 
 = 1.0 =
 * tagged as stable
